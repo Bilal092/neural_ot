@@ -1,0 +1,21 @@
+# dataset_list.txt
+Abalone
+Banknote
+Breast-w
+Diabetes
+Haberman
+Heart
+Ionosphere
+Isolet
+Jm1
+Kc1
+Madelon
+Musk
+Segment
+Semeion
+Sonar
+Spambase_n
+Vehicle
+Waveform
+Wdbc
+Yeast

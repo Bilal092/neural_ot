@@ -1,0 +1,160 @@
+from functools import partial
+import math
+
+import jax
+import jax.numpy as jnp
+import flax
+import optax
+import diffrax
+import numpy as np
+from typing import NamedTuple, Any
+
+@flax.struct.dataclass
+class State:
+  step: int
+  opt_state: Any
+  model_params: Any
+  ema_rate: Any
+  params_ema: Any
+  key: Any
+  c: Any
+
+def get_optimizer(config):
+    return optax.adam(learning_rate=config.lr)
+
+def get_step_fn_T(config, optimizer_T, optimizer_eta, loss_fn_T):
+    def step_fn_T(carry_state, batch):
+        key, state_T, state_eta = carry_state
+        key, step_key = jax.random.split(key)
+
+        grad_fn_T = jax.value_and_grad(loss_fn_T, argnums=0, has_aux=True)
+        (loss_T_val, translation), grads_T = grad_fn_T(state_T.model_params, state_eta.model_params, batch, key)
+
+        grads_Tp = jax.lax.pmean(grads_T, axis_name='batch')
+        loss_Tp = jax.lax.pmean(loss_T_val, axis_name='batch')
+        translation_p = jax.lax.pmean(translation, axis_name='batch')
+
+        updates, new_opt_state = optimizer_T.update(grads_Tp, state_T.opt_state, params=state_T.model_params)
+        new_params = optax.apply_updates(state_T.model_params, updates)
+        new_params_ema = jax.tree_util.tree_map(
+            lambda p_ema, p: p_ema * state_T.ema_rate + p * (1. - state_T.ema_rate),
+            state_T.params_ema, new_params)
+
+        new_state_T = state_T.replace(
+            step=state_T.step + 1,
+            opt_state=new_opt_state,
+            model_params=new_params,
+            params_ema=new_params_ema,
+            key=key,
+        )
+        carry_state = (step_key, new_state_T, state_eta)
+
+        return carry_state, (loss_Tp, translation_p)
+    return step_fn_T
+
+
+def get_step_fn_eta(config, optimizer_T, optimizer_eta, loss_fn_eta):
+    def step_fn_eta(carry_state, batch):
+        key, state_T, state_eta = carry_state
+        key, step_key = jax.random.split(key)
+
+        grad_fn_eta = jax.value_and_grad(loss_fn_eta, argnums=1, has_aux=True)
+        (loss_eta_val, translation), grads_eta = grad_fn_eta(state_T.model_params, state_eta.model_params, batch, key)
+
+        grads_etap = jax.lax.pmean(grads_eta, axis_name='batch')
+        loss_etap = jax.lax.pmean(loss_eta_val, axis_name='batch')
+        translation_p = jax.lax.pmean(translation, axis_name='batch')
+
+        updates, new_opt_state = optimizer_eta.update(grads_etap, state_eta.opt_state, params=state_eta.model_params)
+        new_params = optax.apply_updates(state_eta.model_params, updates)
+        new_params_ema = jax.tree_util.tree_map(
+            lambda p_ema, p: p_ema * state_eta.ema_rate + p * (1. - state_eta.ema_rate),
+            state_eta.params_ema, new_params)
+
+        new_state_eta = state_eta.replace(
+            step=state_eta.step + 1,
+            opt_state=new_opt_state,
+            model_params=new_params,
+            params_ema=new_params_ema,
+            key=key,
+        )
+        carry_state = (step_key, state_T, new_state_eta)
+
+        return carry_state, (loss_etap, translation_p)
+    return step_fn_eta
+
+
+def get_eta_eval_func(model_eta):
+    def eval_func(state_eta, x):
+        return model_eta.apply(state_eta.params_ema, x)
+        # ones = jnp.ones(x.shape[:-1]+(1,))
+        # return model_s.apply(state_s.params_ema, ones, x)
+         
+        # return model_s.apply(state_s.model_params, ones, x) # this line can be uncommented and above can be commented in case direct model params are to be used for model evaluation
+    return eval_func
+    
+def evaluate_pu(eval_ds, state_s, eval_fn):
+    all_preds = []
+    all_labels = []
+    for data, labels in eval_ds:
+        s_val = eval_fn(state_s, jnp.array(data))
+        
+        all_preds.append(np.array(s_val).reshape(-1))
+        all_labels.append(np.array(labels).reshape(-1))
+
+    preds = jnp.concatenate(all_preds, axis=0)
+    labels = jnp.concatenate(all_labels, axis=0)
+
+    return labels, preds
+
+# def eval_init_velocities(eval_ds, state_s, eval_fn):
+#     all_v = []
+#     s_fn = lambda state_s, t, x: eval_fn(state_s,t,x).sum()
+#     grad_fn = jax.grad(s_fn, argnums=2)
+#     for data, label in eval_ds:
+#         zeros = jnp.zeros(data.shape[:-1]+(1,))
+#         g = grad_fn(state_s, zeros, jnp.array(data))
+#         g_norm = jnp.sum(g**2, axis=tuple(range(1, g.ndim)))
+#         all_v.append(np.array(g_norm).reshape(-1))
+    
+#     return np.array(all_v)
+        
+
+# def get_model_fn(model, params):
+#     def model_fn(t, x):
+#         return model.apply(params, t, x)
+#     return model_fn
+
+# def get_generator_ode(model, dt):
+#     def artifact_gen(x0, state):
+#         s = get_model_fn(model, params=state.model_params)
+#         # s = get_model_fn(model, params=state.params_ema)
+#         ts = jnp.linspace(0, 1.0, int(1/dt)+1)
+#         dsdx = jax.grad(lambda _t, _x: s(_t, _x).sum(), argnums=1)
+#         vector_field = lambda _t,_x,_args: dsdx(_t,_x)
+#         solve = partial(diffrax.diffeqsolve, 
+#                             terms=diffrax.ODETerm(vector_field), 
+#                             solver=diffrax.Dopri5(), 
+#                             t0=0.0, t1=1.0, dt0=dt, 
+#                             saveat=diffrax.SaveAt(ts=ts),
+#                             stepsize_controller=diffrax.ConstantStepSize(True), 
+#                             adjoint=diffrax.NoAdjoint())
+        
+#         solution = solve(y0=x0, args=state)
+#         ode_int_artifacts = solution
+#         return ode_int_artifacts
+#     return artifact_gen
+
+# def get_s_func(model_s):
+#     def s_func(state_s, t, x):
+#         # print(x.shape)
+#         # ones = jnp.ones(x.shape[:-1]+(1,))
+#         return model_s.apply(state_s.model_params, t, x)
+#     return s_func
+
+# def get_q_func(model_q):
+#     def q_func(state_q, t, x0, x1):
+#         return model_q.apply(state_q.model_params, t, x0, x1)
+#     return q_func
+
+
