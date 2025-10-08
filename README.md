@@ -56,12 +56,14 @@ In order to understand the principles behind paper, please start with static sub
 | <img src="images/squares_c2_potential.png" style="width:600px; height:200px; object-fit:contain;"/> | <img src="images/squares_c2_potential_t1.png" style="width:600px; height:200px; object-fit:contain;"/> |
 Evolution of dynamic potential with time
 <img src="images/d_squaresc2_transition.png" style="width:600px; object-fit:contain;"/>
-MNIST $\rightarrow$ EMNIST
+T
 
 | Static | Dynamic |
 |:--------------:|:---------------:|
 | <img src="images/MNIST_EMNIST_static_.png" style="width:600px; height:200px; object-fit:contain;"/> | <img src="images/MNIST_EMNIST_dynamic_ode.png" style="width:600px; height:200px; object-fit:contain;"/> |
-
+<p align="center">
+  <sub><b>Figure 5.</b> MNIST → EMNIST. The dynamic version is evaluated using Euler integration (100 steps).</sub>
+</p>
 
 
 Evolution of dynamic potential with time for transitions between two bimodal uniforms
