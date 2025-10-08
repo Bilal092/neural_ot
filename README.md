@@ -62,11 +62,11 @@ In order to understand the principles behind paper, please start with static sub
 | Static example c=2 | Dynamic example c=2 |
 |:--------------:|:---------------:|
 | <img src="images/squares_c2_potential.png" style="width:600px; height:200px; object-fit:contain;"/> | <img src="images/squares_c2_potential_t1.png" style="width:600px; height:200px; object-fit:contain;"/> |
-Evolution of dynamic potential with time
+Evolution of dynamic potential with time between two uniform distributions
 <img src="images/d_squaresc2_transition.png" style="width:600px; object-fit:contain;"/>
 
 
-Evolution of dynamic potential with time for transitions between two bimodal uniform distributions
+Evolution of dynamic potential with time between two bimodal uniform distributions
 <img src="images/ds_diamonds_transistions.png" style="width:600px; object-fit:contain;"/>
 
 
