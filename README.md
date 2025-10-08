@@ -50,8 +50,7 @@ Details to run are provided with each experiment.
   <sub><b>Figure 4.</b> FFHQ man → woman translation using (a) static and (b) dynamic subset selection. The dynamic version is evaluated using Euler integration (100 steps).</sub>
 </p>
 
-
-In order to understand the principle behind paper, please start with static subset alignment between toy point distributions start with this [notebook](static_subsetting_toy.ipynb).
+In order to understand the principles behind paper, please start with static subset alignment between toy point distributions start with this [notebook](static_subsetting_toy.ipynb).
 | Static example c=2 | Dynamic example c=2 |
 |:--------------:|:---------------:|
 | <img src="images/squares_c2_potential.png" style="width:500px; height:250px; object-fit:contain;"/> | <img src="images/squares_c2_potential_t1.png" style="width:500px; height:250px; object-fit:contain;"/> |
