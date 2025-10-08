@@ -7,8 +7,7 @@ In order to understand the principle behind paper, please start with static subs
 |:--------------:|:---------------:|
 | <img src="images/squares_c2_potential.png" style="width:400px; height:250px; object-fit:contain;"/> | <img src="images/squares_c2_potential_t1.png" style="width:500px; height:250px; object-fit:contain;"/> |
 Evolution of dynamic potential with time
-![Subset alignment](images/d_squaresc2_transition.png)
-
+<img src="images/d_squaresc2_transition.png" style="width:400px; object-fit:contain;"/>
 MNIST $\rightarrow$ EMNIST
 
 | Static | Dynamic |
