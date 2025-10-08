@@ -50,6 +50,14 @@ Details to run are provided with each experiment.
   <sub><b>Figure 4.</b> FFHQ man → woman translation using (a) static and (b) dynamic subset selection. The dynamic version is evaluated using Euler integration (100 steps).</sub>
 </p>
 
+## MNIST → EMNIST: Results
+| Static | Dynamic |
+|:--------------:|:---------------:|
+| <img src="images/MNIST_EMNIST_static_.png" style="width:600px; height:200px; object-fit:contain;"/> | <img src="images/MNIST_EMNIST_dynamic_ode.png" style="width:600px; height:200px; object-fit:contain;"/> |
+<p align="center">
+  <sub><b>Figure 5.</b> MNIST → EMNIST. The dynamic version is evaluated using Euler integration (100 steps).</sub>
+</p>
+
 In order to understand the principles behind paper, please start with static subset alignment between toy point distributions start with this [notebook](static_subsetting_toy.ipynb).
 | Static example c=2 | Dynamic example c=2 |
 |:--------------:|:---------------:|
@@ -57,12 +65,6 @@ In order to understand the principles behind paper, please start with static sub
 Evolution of dynamic potential with time
 <img src="images/d_squaresc2_transition.png" style="width:600px; object-fit:contain;"/>
 
-| Static | Dynamic |
-|:--------------:|:---------------:|
-| <img src="images/MNIST_EMNIST_static_.png" style="width:600px; height:200px; object-fit:contain;"/> | <img src="images/MNIST_EMNIST_dynamic_ode.png" style="width:600px; height:200px; object-fit:contain;"/> |
-<p align="center">
-  <sub><b>Figure 5.</b> MNIST → EMNIST. The dynamic version is evaluated using Euler integration (100 steps).</sub>
-</p>
 
 Evolution of dynamic potential with time for transitions between two bimodal uniform distributions
 <img src="images/ds_diamonds_transistions.png" style="width:600px; object-fit:contain;"/>
