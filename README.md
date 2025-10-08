@@ -20,7 +20,7 @@ MNIST $\rightarrow$ EMNIST
 
 | (a) Static subset | (b) Dynamic subset (Euler 100 steps) |
 |:--:|:--:|
-| <img src="images/ADULT_YOUNG_static.png" style="width:500px; height:300px; object-fit:contain;"/> | <img src="images/ADULT_YOUNG_dynamic_ode.png" style="width:500px; height:300px; object-fit:contain;"/> |
+| <img src="images/ADULT_YOUNG_static.png" style="width:600px; height:300px; object-fit:contain;"/> | <img src="images/ADULT_YOUNG_dynamic_ode.png" style="width:600px; height:300px; object-fit:contain;"/> |
 
 <p align="center">
   <sub><b>Figure 1.</b> FFHQ old → young translation using (a) static and (b) dynamic subset selection. The dynamic version is evaluated using Euler integration (100 steps).</sub>
