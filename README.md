@@ -64,7 +64,7 @@ MNIST $\rightarrow$ EMNIST
 
 
 
-Evolution of dynamic potential with time for transitions between two bomodal uniforms
+Evolution of dynamic potential with time for transitions between two bimodal uniforms
 <img src="images/ds_diamonds_transistions.png" style="width:600px; object-fit:contain;"/>
 
 
