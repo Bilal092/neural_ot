@@ -20,7 +20,7 @@ Details to run are provided with each experiment.
 
 | (a) Static subset | (b) Dynamic subset (Euler 100 steps) |
 |:--:|:--:|
-| <img src="images/YOUNG_ADULT_static.png" style="width:500px; height:250px; object-fit:contain;"/> | <img src="images/YOUNG_ADULT_dynamic_ode.png" style="width:500px; height:250px; object-fit:contain;"/> |
+| <img src="images/YOUNG_ADULT_static.png" style="width:500px; height:200px; object-fit:contain;"/> | <img src="images/YOUNG_ADULT_dynamic_ode.png" style="width:500px; height:200px; object-fit:contain;"/> |
 
 <p align="center">
   <sub><b>Figure 2.</b> FFHQ young → old translation using (a) static and (b) dynamic subset selection. The dynamic version is evaluated using Euler integration (100 steps).</sub>
