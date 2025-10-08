@@ -12,7 +12,7 @@ MNIST $\rightarrow$ EMNIST
 
 | Static | Dynamic |
 |:--------------:|:---------------:|
-| <img src="images/MNIST_EMNIST_static_.png" style="width:400px; height:250px; object-fit:contain;"/> | <img src="images/MNIST_EMNIST_dynamic_ode.png" style="width:400px; height:250px; object-fit:contain;"/> |
+| <img src="images/MNIST_EMNIST_static_.png" style="width:500px; height:250px; object-fit:contain;"/> | <img src="images/MNIST_EMNIST_dynamic_ode.png" style="width:500px; height:250px; object-fit:contain;"/> |
 
 ## FFHQ: Results
 
