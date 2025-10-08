@@ -9,4 +9,10 @@ In order to understand the principle behind paper, please start with static subs
 Evolution of dynamic potential with time
 ![Subset alignment](images/d_squaresc2_transition.png)
 
+MNIST $\rightarrow$ EMNIST
+
+| Static example | Dynamic example |
+|:--------------:|:---------------:|
+| <img src="images/MNIST_EMNIST_static_.png" style="width:400px; height:250px; object-fit:contain;"/> | <img src="images/MNIST_EMNIST_dynamic_ode.png" style="width:400px; height:250px; object-fit:contain;"/> |
+
 
