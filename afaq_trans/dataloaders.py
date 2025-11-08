@@ -163,7 +163,6 @@ class PhiFilteredDS:
         #print(f"length of prefetched base_dataset_inside={len(dataset.prefetch(self.prefetch_size))}")
         return dataset.prefetch(self.prefetch_size)
 
-    # helpers once in your class
     def _flatten_leading(self, t):
         t = tf.convert_to_tensor(t)
         nd = len(self.batch_dims)                 # e.g. 2 or 3 (D, S?, B)
