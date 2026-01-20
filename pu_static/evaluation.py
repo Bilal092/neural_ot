@@ -157,19 +157,3 @@ def evaluate(config, model, state, dataset, gen_func):
             target_mlp_classifier.load_state_dict(torch.load('/lustre/cniel/neural-ot-ss/lagrangian-pot-flows/subset_selection_embeddings/classifier_checkpoints/male_female_classifier.pth', map_location=DEVICE, weights_only=True))        
         
         return evaluate_ffhq(config, gen_outputs_, sexes, ages, mlp_classifier, target_mlp_classifier)
-    
-    
-    
-        
-        
-            
-            
-            
-            
-        
-        
-        
-    
-    
-    
-    
