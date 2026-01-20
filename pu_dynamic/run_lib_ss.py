@@ -283,9 +283,4 @@ def train(config, workdir):
         labels, pred = eval_utils.evaluate_pu(val_ds, state_s, s_eval_fn)
         acc_PU = (labels == pred).mean()
         
-        return acc_PU, (labels, pred)
-        
-        
-    
-    
-    
+        return acc_PU, (labels, pred)   
