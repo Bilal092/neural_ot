@@ -1,6 +1,6 @@
 Create environment using environment.yml.
 
-Details to run are provided with each experiment.
+Details to run are provided with each experiment. All experiments are logged using logged using wandb. If you want to use some other logger or save results locally modify the logging part of the code accordingly.
 
 ## FFHQ: Results
 
